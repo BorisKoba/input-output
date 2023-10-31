@@ -16,8 +16,9 @@ public class TcpServer implements Runnable {
 		try {
 			while (true) {
 				Socket socket = serverSocket.accept();
-				TcpClientServer client = new TcpClientServer(socket, protocol);
-				client.run();
+				ClientSessionHandler client = new ClientSessionHandler(socket, protocol);
+				Thread thread = new Thread(client);
+				thread.start();
 			}
 			
 		} catch(Exception e) {
